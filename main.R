@@ -118,16 +118,18 @@ label_res <- function(deseq2_res, padj_threshold) {
   } else {
     tib <- tibble::as_tibble(deseq2_res, rownames = "genes")
   }
-  labeled <- tib %>%
-    dplyr::mutate(
-      volc_plot_status = dplyr::case_when(
-        padj < padj_threshold & log2FoldChange > 0 ~ "UP",
-        padj < padj_threshold & log2FoldChange < 0 ~ "DOWN",
-        TRUE                                        ~ "NS"
-      )
+  
+  tib$volc_plot_status <- ifelse(
+    !is.na(tib$padj) & tib$padj < padj_threshold & tib$log2FoldChange > 0, "UP",
+    ifelse(
+      !is.na(tib$padj) & tib$padj < padj_threshold & tib$log2FoldChange < 0, "DOWN",
+      "NS"
     )
-  return(labeled)
+  )
+  
+  return(tib)
 }
+
 
 
 
