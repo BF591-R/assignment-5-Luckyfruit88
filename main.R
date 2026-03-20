@@ -118,7 +118,6 @@ label_res <- function(deseq2_res, padj_threshold) {
   } else {
     tib <- tibble::as_tibble(deseq2_res, rownames = "genes")
   }
-  
   labeled <- tib %>%
     dplyr::mutate(
       volc_plot_status = dplyr::case_when(
@@ -129,6 +128,7 @@ label_res <- function(deseq2_res, padj_threshold) {
     )
   return(labeled)
 }
+
 
 
 
@@ -308,6 +308,7 @@ make_ranked_log2fc <- function(labeled_results, id2gene_path) {
   
   return(rnk_list)
 }
+
 
 
 
